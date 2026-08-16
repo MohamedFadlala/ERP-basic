@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+
+# Build output
+release/
+dist/
+
+# Local database / data
+data/
+*.sqlite
+*.sqlite-journal
+*.db
+
+# Environment and cryptographic secrets
+.env
+.env.*
+!.env.example
+private-key.pem
+*.key
+
+# Temp
+tmp/
+coverage/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Editor
+.vscode/
+.idea/

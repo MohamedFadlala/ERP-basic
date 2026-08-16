@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Holool ERP Activation</title>
+  <link rel="icon" type="image/png" href="../icon.png">
+  <link rel="stylesheet" href="license.css">
+</head>
+<body>
+  <main class="license-card">
+    <div class="brand-mark">H</div>
+    <p class="eyebrow">Holool Tech</p>
+    <h1>Holool ERP</h1>
+    <p class="subtitle">Activate this computer or start your seven-day trial.</p>
+
+    <section class="hardware-panel">
+      <label for="hardwareId">Hardware ID</label>
+      <div class="input-row">
+        <input id="hardwareId" readonly value="Loading...">
+        <button id="copyHardware" class="secondary" type="button">Copy Hardware ID</button>
+      </div>
+      <p class="hint">Send this ID to Holool Tech when requesting a permanent license.</p>
+    </section>
+
+    <section>
+      <label for="licenseKey">License key</label>
+      <textarea id="licenseKey" rows="5" spellcheck="false" placeholder="ERP1..."></textarea>
+      <div class="button-row">
+        <button id="pasteKey" class="secondary" type="button">Paste</button>
+        <button id="importFile" class="secondary" type="button">Import License File</button>
+        <button id="activateLicense" class="primary" type="button">Activate License</button>
+      </div>
+    </section>
+
+    <p id="statusMessage" class="status" role="status" aria-live="polite"></p>
+
+    <div class="footer-actions">
+      <button id="startTrial" class="trial" type="button" hidden>Start 7-Day Trial</button>
+      <button id="exitApp" class="danger" type="button">Exit</button>
+    </div>
+  </main>
+  <script src="license.js"></script>
+</body>
+</html>

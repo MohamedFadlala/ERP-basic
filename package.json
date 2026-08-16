@@ -1,0 +1,53 @@
+{
+  "name": "holool-app",
+  "version": "0.1.0",
+  "description": "Electron accounting application foundation with SQLite",
+  "main": "electron/main.js",
+  "author": "Holool Technology",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test test/*.test.js",
+    "dist": "electron-builder --win nsis --x64",
+    "portable": "electron-builder --win portable --x64"
+  },
+  "devDependencies": {
+    "electron": "^28.3.3",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "com.holool.app",
+    "productName": "Holool ERP Enterprise",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "electron/**/*",
+      "src/**/*",
+      "database/**/*",
+      "licensing/**/*",
+      "icon.png",
+      "package.json"
+    ],
+    "win": {
+      "icon": "icon.png",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  },
+  "dependencies": {
+    "sql.js": "^1.13.0"
+  }
+}
