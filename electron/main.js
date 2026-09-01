@@ -226,6 +226,13 @@ ipcMain.handle('users:delete', async (event, userId) => {
 });
 
 ipcMain.handle('database:info', async event => { getSession(event); return (await databasePromise).getInfo(); });
+// This setting is safe to read before authentication, allowing LAN clients to
+// render even the sign-in screen in the installation's selected language.
+ipcMain.handle('settings:get-locale', async () => (await databasePromise).getApplicationLocale());
+ipcMain.handle('settings:save-locale', async (event, locale) => {
+  requireAdministrator(event);
+  return (await databasePromise).saveApplicationLocale(locale);
+});
 ipcMain.handle('settings:get-branding', async event => { getSession(event); return (await databasePromise).getBusinessBranding(); });
 ipcMain.handle('settings:save-branding', async (event, input) => { requireAdministrator(event); return (await databasePromise).saveBusinessBranding(input || {}); });
 ipcMain.handle('purchases:setup', async event => {

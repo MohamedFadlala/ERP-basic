@@ -35,6 +35,14 @@ function seedActorsAndCatalog(service) {
   };
 }
 
+test('application locale is shared through app settings and validates supported languages', async t => {
+  const service = await createService(t);
+  assert.equal(service.getApplicationLocale(), null);
+  assert.equal(service.saveApplicationLocale('ar'), 'ar');
+  assert.equal(service.getApplicationLocale(), 'ar');
+  assert.throws(() => service.saveApplicationLocale('fr'), /supported application language/i);
+});
+
 test('approved purchase, funding, payment, receipt, pricing, sale, and return remain balanced and auditable', async t => {
   const service = await createService(t);
   const { supplierId, productId } = seedActorsAndCatalog(service);

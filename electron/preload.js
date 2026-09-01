@@ -5,7 +5,8 @@ const { contextBridge, ipcRenderer } = require('electron');
 const channels = Object.freeze({
   getServerInfo: 'server:info', login: 'auth:login', logout: 'auth:logout',
   listUsers: 'users:list', addUser: 'users:add', updateUser: 'users:update', deleteUser: 'users:delete',
-  getDatabaseInfo: 'database:info', getBusinessBranding: 'settings:get-branding',
+  getDatabaseInfo: 'database:info', getApplicationLocale: 'settings:get-locale',
+  saveApplicationLocale: 'settings:save-locale', getBusinessBranding: 'settings:get-branding',
   saveBusinessBranding: 'settings:save-branding', selectRecordImages: 'documents:select-images',
   releaseRecordImages: 'accounting:release-attachments', viewInvoiceImage: 'documents:view-invoice-image',
   exportInvoiceAttachment: 'documents:export-invoice-attachment', getPurchaseSetup: 'purchases:setup',

@@ -315,6 +315,9 @@ async function handleLogin(event) {
     const user = await window.appBridge.login({ username: byId('loginUsername').value.trim(), password: byId('loginPassword').value });
     if (!user) { byId('loginError').textContent = 'Incorrect username or password.'; return; }
     state.currentUser = user;
+    // Migrate the administrator's local preference from older releases once;
+    // afterwards every Electron and LAN client reads the shared database value.
+    await window.i18n.synchronizeLocale({ migrateLocalPreference: user.role === ADMIN_ROLE });
     byId('loginError').textContent = '';
     byId('loginScreen').hidden = true;
     byId('appShell').hidden = false;

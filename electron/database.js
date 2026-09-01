@@ -178,6 +178,19 @@ class DatabaseService {
     return this.listUsers();
   }
 
+  getApplicationLocale() {
+    const locale = this.all("SELECT value FROM app_settings WHERE key = 'application_locale' LIMIT 1")[0]?.value;
+    return ['en', 'ar'].includes(locale) ? locale : null;
+  }
+
+  saveApplicationLocale(locale) {
+    const normalized = String(locale || '').trim().toLowerCase();
+    if (!['en', 'ar'].includes(normalized)) throw new Error('Select a supported application language.');
+    this.run(`INSERT INTO app_settings(key, value) VALUES ('application_locale', ?)
+      ON CONFLICT(key) DO UPDATE SET value = excluded.value`, [normalized]);
+    return normalized;
+  }
+
   getBusinessBranding() {
     const settings = Object.fromEntries(this.all(
       "SELECT key, value FROM app_settings WHERE key IN ('business_name', 'business_logo', 'business_address', 'business_phone', 'business_phone_secondary', 'business_email')"

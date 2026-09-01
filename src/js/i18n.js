@@ -126,23 +126,43 @@
     document.dispatchEvent(new CustomEvent('localechange', { detail: { locale } }));
   }
 
+  async function synchronizeLocale({ migrateLocalPreference = false } = {}) {
+    if (!window.appBridge?.getApplicationLocale) return locale;
+    const savedLocale = await window.appBridge.getApplicationLocale();
+    if (supportedLocales.includes(savedLocale)) {
+      if (savedLocale !== locale) setLocale(savedLocale);
+    } else if (migrateLocalPreference && window.appBridge.saveApplicationLocale) {
+      const migratedLocale = await window.appBridge.saveApplicationLocale(locale);
+      if (migratedLocale !== locale) setLocale(migratedLocale);
+    }
+    return locale;
+  }
+
   function initializeLanguageSettings() {
     const form = document.getElementById('languageSettingsForm');
     const select = document.getElementById('languageSelect');
     const message = document.getElementById('languageSettingsMessage');
     if (!form || !select || !message) return;
     select.value = locale;
-    form.addEventListener('submit', event => {
+    form.addEventListener('submit', async event => {
       event.preventDefault();
-      setLocale(select.value);
-      message.textContent = 'Language preference saved on this device.';
-      message.hidden = false;
+      message.hidden = true;
+      try {
+        const savedLocale = await window.appBridge.saveApplicationLocale(select.value);
+        setLocale(savedLocale);
+        message.textContent = 'Language preference saved for all users and devices.';
+        message.hidden = false;
+      } catch (error) {
+        message.textContent = error?.message || 'Unable to save the application language.';
+        message.hidden = false;
+      }
     });
   }
   window.i18n = {
     get locale() { return locale; },
     t: translateMessage,
     setLocale,
+    synchronizeLocale,
     formatNumber(value, options) { return Number(value || 0).toLocaleString(locale === 'ar' ? 'ar-SD' : 'en-US', options); },
     formatDate(value, options) { return new Intl.DateTimeFormat(locale === 'ar' ? 'ar-SD' : 'en-GB', options).format(value); }
   };
@@ -156,4 +176,5 @@
   initializeLanguageSettings();
   localizeTree();
   observe();
+  synchronizeLocale().catch(() => {});
 })();

@@ -35,3 +35,9 @@ Object.assign(window.APP_LOCALES.ar,{
 "A rejection reason is required.":"سبب الرفض مطلوب.","Unable to record the finance decision.":"تعذّر تسجيل قرار الإدارة المالية.",
 "A different authorized user must approve this order.":"يجب أن يعتمد هذا الأمر مستخدم مخوّل آخر."
 });
+
+Object.assign(window.APP_LOCALES.ar, {
+  "Choose the application language for all users and devices.": "اختر لغة التطبيق لجميع المستخدمين والأجهزة.",
+  "Language preference saved for all users and devices.": "تم حفظ تفضيل اللغة لجميع المستخدمين والأجهزة.",
+  "Unable to save the application language.": "تعذّر حفظ لغة التطبيق."
+});
